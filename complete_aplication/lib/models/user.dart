@@ -1,4 +1,4 @@
-class User {
+class UserModel {
   String _nome;
   String _sobrenome;
   String _genero;
@@ -25,7 +25,7 @@ class User {
 
   set password(value) => this._password = value;
 
-  User(
+  UserModel(
     this._nome,
     this._sobrenome,
     this._genero,

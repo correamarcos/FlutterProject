@@ -15,11 +15,14 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   void initState() {
     super.initState();
-    verificarToken().then((value) => {
-          value == true
-              ? Navigator.of(context).pushReplacementNamed(AppRoutes.HOME)
-              : Navigator.of(context).pushReplacementNamed(AppRoutes.LOGIN)
-        });
+
+    Future.delayed(Duration(seconds: 2), () {
+      verificarToken().then((value) => {
+            value == true
+                ? Navigator.of(context).pushReplacementNamed(AppRoutes.HOME)
+                : Navigator.of(context).pushReplacementNamed(AppRoutes.LOGIN)
+          });
+    });
   }
 
   @override

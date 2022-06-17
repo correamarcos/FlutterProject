@@ -4,10 +4,8 @@ import 'package:complete_aplication/pages/register.dart';
 import 'package:complete_aplication/pages/welcome.dart';
 import 'package:complete_aplication/providers/app_providers.dart';
 import 'package:complete_aplication/routes/app_routes.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() {
   runApp(const MyApp());
