@@ -25,90 +25,88 @@ class _LoginPageState extends State<LoginPage> {
       ),
       body: Container(
         margin: EdgeInsets.all(16),
-        child: Center(
-          child: Column(
-            children: [
-              Container(
-                margin: EdgeInsets.only(top: 50),
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                color: Colors.grey[50],
-                width: 300,
-                child: Form(
-                  key: _loginKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      TextFormField(
-                        controller: _controllerEmail,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          labelText: "E-mail",
-                          border: InputBorder.none,
-                        ),
-                        validator: (email) {
-                          if (email == null || email.trim().isEmpty) {
-                            return 'Digite seu e-mail';
-                          } else if (!RegExp(
-                                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                              .hasMatch(_controllerEmail.text)) {
-                            return 'Digite um e-mail válido';
-                          }
-                          return null;
-                        },
-                      ),
-                      TextFormField(
-                        controller: _controllerPassword,
-                        obscureText: true,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          labelText: "Password",
-                          border: InputBorder.none,
-                        ),
-                        validator: (senha) {
-                          if (senha == null || senha.length < 6) {
-                            return 'A senha deve possuir 6 caracteres ou mais';
-                          }
-                          return null;
-                        },
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 18),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            if (_loginKey.currentState!.validate()) {
-                              // UserModel u = UserModel(
-                              //     _controllerNome.text,
-                              //     _controllerSobrenome.text,
-                              //     _controllerGenero!,
-                              //     _controllerEmail.text,
-                              //     _controllerPassword.text);
-
-                              // FireBaseApp fb = FireBaseApp();
-                              // bool resultado = await fb.cadastrarUsuario(u);
-                              // resultado
-                              //     ? Navigator.pushReplacementNamed(
-                              //         context, AppRoutes.WELCOME)
-                              //     : ScaffoldMessenger.of(context)
-                              //         .showSnackBar(snackBar);
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(top: 50),
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  color: Colors.grey[50],
+                  width: 300,
+                  child: Form(
+                    key: _loginKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        TextFormField(
+                          controller: _controllerEmail,
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                            labelText: "E-mail",
+                            border: InputBorder.none,
+                          ),
+                          validator: (email) {
+                            if (email == null || email.trim().isEmpty) {
+                              return 'Digite seu e-mail';
+                            } else if (!RegExp(
+                                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                .hasMatch(_controllerEmail.text)) {
+                              return 'E-mail inválido';
                             }
+                            return null;
                           },
-                          child: Text('Cadastrar'),
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.all(10),
+                        ),
+                        TextFormField(
+                          controller: _controllerPassword,
+                          obscureText: true,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            labelText: "Password",
+                            border: InputBorder.none,
+                          ),
+                          validator: (senha) {
+                            if (senha == null || senha.length < 6) {
+                              return 'Senha inválida';
+                            }
+                            return null;
+                          },
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 18),
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              if (_loginKey.currentState!.validate()) {
+                                FireBaseApp fb = FireBaseApp();
+                                bool resultado = await fb.realizarLogin(
+                                    _controllerEmail.text,
+                                    _controllerPassword.text);
+
+                                resultado
+                                    ? Navigator.pushReplacementNamed(
+                                        context, AppRoutes.WELCOME)
+                                    : ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                              }
+                            },
+                            child: Text('Login'),
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.all(10),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(AppRoutes.REGISTER);
-                },
-                child: Text("Registrar-se"),
-              ),
-            ],
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(AppRoutes.REGISTER);
+                  },
+                  child: Text("Registrar-se"),
+                ),
+              ],
+            ),
           ),
         ),
       ),

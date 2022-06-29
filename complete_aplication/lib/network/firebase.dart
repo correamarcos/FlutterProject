@@ -9,6 +9,8 @@ class FireBaseApp {
   FireBaseApp();
 
   Future<bool> cadastrarUsuario(UserModel usuario) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
     //INICIANDO INTANCIA FIREBASE
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp();
@@ -21,19 +23,15 @@ class FireBaseApp {
         .createUserWithEmailAndPassword(email: email, password: senha)
         .then((firebaseUser) {
       dynamic user = firebaseUser.user;
-
-      print("novo usuario: sucesso!! e-mail: " + user.email);
+      sharedPreferences.setString('token', '${auth.currentUser}');
       _cadastrarTabelaUser(usuario);
       return true;
     }).catchError((erro) {
-      print("novo usuario: erro " + erro.toString());
       return false;
     });
   }
 
   void _cadastrarTabelaUser(UserModel usuario) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-
     //INICIANDO INTANCIA FIREBASE
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp();
@@ -46,14 +44,35 @@ class FireBaseApp {
     String? senha = '${usuario.password}';
 
     //BUSCANDO DADOS DO USUARIO
-    DocumentReference ref = await db.collection("usuarios").add({
+    db.collection("usuarios").add({
       "nome": nome,
       "sobrenome": sobrenome,
       "genero": genero,
       "email": email,
       "password": senha,
     });
-    sharedPreferences.setString('token', '${ref.id}');
+  }
+
+  Future<bool> realizarLogin(String email, String senha) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    //INICIANDO INTANCIA FIREBASE
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
+
+    FirebaseAuth auth = FirebaseAuth.instance;
+
+    return auth
+        .signInWithEmailAndPassword(email: email, password: senha)
+        .then((firebaseUser) {
+      dynamic user = firebaseUser.user;
+      print("Logar usuario: sucesso!! e-mail: " + user.email);
+      sharedPreferences.setString('token', '${auth.currentUser}');
+      return true;
+    }).catchError((erro) {
+      print("Logar usuario: erro " + erro.toString());
+      return false;
+    });
   }
 }
 
