@@ -1,4 +1,5 @@
 import 'package:chat_flutter/config/constants.dart';
+import 'package:chat_flutter/pages/home.dart';
 import 'package:chat_flutter/pages/login_page.dart';
 import 'package:chat_flutter/pages/welcome_page.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const LoginPage(),
+      home: const HomePage(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: COR_PRIMARIA,
