@@ -67,6 +67,8 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           TextFormField(
+                            autofocus: true,
+                            keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
                                 label: Text("E-mail"),
                                 contentPadding: EdgeInsets.only(left: 20),
@@ -76,6 +78,8 @@ class _LoginPageState extends State<LoginPage> {
                           Padding(
                             padding: const EdgeInsets.only(top: 12, bottom: 12),
                             child: TextFormField(
+                              keyboardType: TextInputType.text,
+                              obscureText: true,
                               decoration: InputDecoration(
                                   label: Text("Password"),
                                   contentPadding: EdgeInsets.only(left: 20),
