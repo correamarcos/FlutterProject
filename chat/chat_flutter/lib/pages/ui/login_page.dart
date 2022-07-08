@@ -1,10 +1,14 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:chat_flutter/config/constants.dart';
+import 'package:chat_flutter/network/controllers/controller_register_login.dart';
+import 'package:chat_flutter/pages/stores/login_store.dart';
+import 'package:chat_flutter/styles/custom_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -13,7 +17,13 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
+ControllerRegisterLogin ctrl = ControllerRegisterLogin();
+bool _value = true;
+bool _obscure = true;
+
 class _LoginPageState extends State<LoginPage> {
+  LoginStore loginStore = LoginStore();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,27 +76,35 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                           ),
-                          TextFormField(
-                            autofocus: true,
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                                label: Text("E-mail"),
-                                contentPadding: EdgeInsets.only(left: 20),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(30))),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 12, bottom: 12),
-                            child: TextFormField(
-                              keyboardType: TextInputType.text,
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                  label: Text("Password"),
-                                  contentPadding: EdgeInsets.only(left: 20),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(30))),
-                            ),
-                          ),
+                          Observer(builder: (_) {
+                            return CustomTextField(
+                              label: "E-mail",
+                              prefix: Icon(Icons.account_circle),
+                              textInputType: TextInputType.emailAddress,
+                              onChanged: loginStore.setEmail,
+                              enabled: !loginStore.loading,
+                              obscure: false,
+                              padding: 20,
+                            );
+                          }),
+                          SizedBox(height: 15),
+                          Observer(builder: (_) {
+                            return CustomTextField(
+                              label: "Password",
+                              prefix: Icon(Icons.lock),
+                              textInputType: TextInputType.text,
+                              onChanged: loginStore.setPassword,
+                              enabled: !loginStore.loading,
+                              obscure: loginStore.isInvisiblePass,
+                              padding: 20,
+                              suffix: IconButton(
+                                icon: Icon(loginStore.isInvisiblePass
+                                    ? Icons.visibility
+                                    : Icons.visibility_off),
+                                onPressed: loginStore.setPassVisibility,
+                              ),
+                            );
+                          }),
                           GestureDetector(
                             onTap: () {
                               print("clicou");
@@ -97,20 +115,35 @@ class _LoginPageState extends State<LoginPage> {
                               child: Text("Forgot Password?"),
                             ),
                           ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(vertical: 15),
-                              shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(30), // <-- Radius
-                              ),
-                            ),
-                            onPressed: () {},
-                            child: const Text(
-                              "Login",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ),
+                          Observer(builder: (_) {
+                            return ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 15),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(30), // <-- Radius
+                                  ),
+                                ),
+                                child: const Text(
+                                  "Login",
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                onPressed: loginStore.loading
+                                    ? null
+                                    : () {
+                                        loginStore.loginPressed;
+                                      }
+
+                                // ? () {
+                                //     // ctrl.autenticarUsuario(
+                                //     //     "marcosga.correa@gmail.com", "123456;") == true
+                                //     //     ? Navigator.pushReplacement(HomePage())
+                                //     //     : ;
+                                //   }
+                                // : null,
+                                );
+                          }),
                           GestureDetector(
                             onTap: () {
                               print("clicou");
@@ -119,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                               padding: EdgeInsets.only(top: 15.0),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
+                                children: <Widget>[
                                   Text(
                                     "Don't have an account?",
                                     style: TextStyle(

@@ -1,11 +1,12 @@
 import 'package:chat_flutter/config/constants.dart';
-import 'package:chat_flutter/pages/views/calls_view.dart';
-import 'package:chat_flutter/pages/views/chats_view.dart';
-import 'package:chat_flutter/pages/views/groups_view.dart';
-import 'package:chat_flutter/pages/views/settings_view.dart';
+import 'package:chat_flutter/pages/ui/views/calls_view.dart';
+import 'package:chat_flutter/pages/ui/views/chats_view.dart';
+import 'package:chat_flutter/pages/ui/views/groups_view.dart';
+import 'package:chat_flutter/pages/ui/views/settings_view.dart';
+
 import 'package:flutter/material.dart';
 
-import '../reusabel/custom_app_bar.dart';
+import '../../reusabel/custom_app_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

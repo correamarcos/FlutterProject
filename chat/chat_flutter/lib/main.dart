@@ -1,7 +1,7 @@
 import 'package:chat_flutter/config/constants.dart';
-import 'package:chat_flutter/pages/home.dart';
-import 'package:chat_flutter/pages/login_page.dart';
-import 'package:chat_flutter/pages/welcome_page.dart';
+import 'package:chat_flutter/pages/ui/home.dart';
+import 'package:chat_flutter/pages/ui/login_page.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
