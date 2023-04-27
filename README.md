@@ -1,14 +1,14 @@
 # FlutterProject
 Repositorio para projetos desenvolvidos em Flutter
 
-# Size Limit [![Cult Of Martians][cult-img]][cult]
+# Associations App  
 
-<img src="https://ai.github.io/size-limit/logo.svg" align="right"
-     alt="Size Limit logo by Anton Lovchikov" width="120" height="178">
+<img src="https://primeresults.com.br/wp-content/uploads/2021/06/logo_prime.png" align="right"
+     alt="Prime Results logo" width="150" height="80">
 
-Size Limit is a performance budget tool for JavaScript. It checks every commit
-on CI, calculates the real cost of your JS for end-users and throws an error
-if the cost exceeds the limit.
+Associations App it's a mobile application developed by Prime Results and intended 
+for use by members of the vehicular associations UniversoAgv and partners.
+It's a multiplatform application available for Android and IOS devices.
 
 * **ES modules** and **tree-shaking** support.
 * Add Size Limit to **Travis CI**, **Circle CI**, **GitHub Actions**
